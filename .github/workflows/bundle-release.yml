@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master  # Trigger the action on every push to the 'master' branch
-  pull_request:
-    branches:
-      - master  # Trigger for PRs targeting the 'master' branch
 
 jobs:
   build:
@@ -35,38 +32,43 @@ jobs:
       - name: Create Webpack Configuration
         run: |
           echo "const path = require('path');" > webpack.config.cjs
-          echo "
-          module.exports = {
-            mode: 'production',
-            entry: './src/index.js',
-            output: {
-              path: path.resolve(__dirname, 'dist'),
-              filename: 'index.bundle.js',
-              library: 'Russo',
-              libraryTarget: 'umd',
-            },
-            module: {
-              rules: [
-                {
-                  test: /\.js$/,
-                  exclude: /node_modules/,
-                  use: {
-                    loader: 'babel-loader',
-                    options: {
-                      presets: ['@babel/preset-env'],
-                    },
-                  },
-                },
-              ],
-            },
-            optimization: {
-              minimize: true,
-            },
-          };
-          " >> webpack.config.cjs
+          echo "module.exports = {" >> webpack.config.cjs
+          echo "  mode: 'production'," >> webpack.config.cjs
+          echo "  entry: './src/index.js'," >> webpack.config.cjs
+          echo "  output: {" >> webpack.config.cjs
+          echo "    path: path.resolve(__dirname, 'dist')," >> webpack.config.cjs
+          echo "    filename: 'index.bundle.js'," >> webpack.config.cjs
+          echo "    library: 'Russo'," >> webpack.config.cjs
+          echo "    libraryTarget: 'umd'," >> webpack.config.cjs
+          echo "  }," >> webpack.config.cjs
+          echo "  module: {" >> webpack.config.cjs
+          echo "    rules: [" >> webpack.config.cjs
+          echo "      {" >> webpack.config.cjs
+          echo "        test: /\.js$/," >> webpack.config.cjs
+          echo "        exclude: /node_modules/," >> webpack.config.cjs
+          echo "        use: {" >> webpack.config.cjs
+          echo "          loader: 'babel-loader'," >> webpack.config.cjs
+          echo "          options: {" >> webpack.config.cjs
+          echo "            presets: ['@babel/preset-env']" >> webpack.config.cjs
+          echo "          }," >> webpack.config.cjs
+          echo "        }," >> webpack.config.cjs
+          echo "      }," >> webpack.config.cjs
+          echo "    ]," >> webpack.config.cjs
+          echo "  }," >> webpack.config.cjs
+          echo "  optimization: {" >> webpack.config.cjs
+          echo "    minimize: true," >> webpack.config.cjs
+          echo "  }," >> webpack.config.cjs
+          echo "};" >> webpack.config.cjs
           
       - name: Build with Webpack
         run: npx webpack --config webpack.config.cjs # Use Webpack to bundle your files
+
+      - name: Create Git Tag
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}"
+          git push origin v${{ github.run_number }}  # Push the tag to GitHub
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
