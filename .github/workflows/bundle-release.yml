@@ -1,0 +1,74 @@
+name: Bundle and Release Russo.js
+
+on:
+  push:
+    branches:
+      - main # Trigger the action on pushes to the 'main' branch
+  pull_request:
+    branches:
+      - main # Trigger for PRs on the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Node.js with PNPM
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18' # Use the Node.js version you prefer
+          registry-url: 'https://registry.npmjs.org' # Use the default NPM registry
+      
+      - name: Install PNPM
+        run: npm install -g pnpm
+      
+      - name: Install dependencies
+        run: pnpm install # Install dependencies using PNPM
+      
+      - name: Install Webpack and Bundling Tools
+        run: |
+          pnpm add -D webpack webpack-cli babel-loader @babel/core @babel/preset-env terser-webpack-plugin # Install Webpack, Babel, and required plugins
+
+      - name: Create Webpack Configuration
+        run: |
+          echo "const path = require('path');" > webpack.config.js
+          echo "module.exports = {" >> webpack.config.js
+          echo "  mode: 'production'," >> webpack.config.js
+          echo "  entry: './index.js'," >> webpack.config.js
+          echo "  output: {" >> webpack.config.js
+          echo "    path: path.resolve(__dirname, 'dist')," >> webpack.config.js
+          echo "    filename: 'index.bundle.js'," >> webpack.config.js
+          echo "    library: 'Russo'," >> webpack.config.js
+          echo "    libraryTarget: 'umd'," >> webpack.config.js
+          echo "  }," >> webpack.config.js
+          echo "  module: {" >> webpack.config.js
+          echo "    rules: [" >> webpack.config.js
+          echo "      {" >> webpack.config.js
+          echo "        test: /\.js$/," >> webpack.config.js
+          echo "        exclude: /node_modules/," >> webpack.config.js
+          echo "        use: {" >> webpack.config.js
+          echo "          loader: 'babel-loader'," >> webpack.config.js
+          echo "          options: {" >> webpack.config.js
+          echo "            presets: ['@babel/preset-env']" >> webpack.config.js
+          echo "          }," >> webpack.config.js
+          echo "        }," >> webpack.config.js
+          echo "      }," >> webpack.config.js
+          echo "    ]," >> webpack.config.js
+          echo "  }," >> webpack.config.js
+          echo "  optimization: {" >> webpack.config.js
+          echo "    minimize: true," >> webpack.config.js
+          echo "  }," >> webpack.config.js
+          echo "};" >> webpack.config.js
+          
+      - name: Build with Webpack
+        run: npx webpack --config webpack.config.js # Use Webpack to bundle your files
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/index.bundle.js # Path to the bundled file created by Webpack
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Automatically provided by GitHub Actions
