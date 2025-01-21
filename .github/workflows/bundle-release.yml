@@ -34,34 +34,34 @@ jobs:
 
       - name: Create Webpack Configuration
         run: |
-          echo "const path = require('path');" > webpack.config.js
-          echo "module.exports = {" >> webpack.config.js
-          echo "  mode: 'production'," >> webpack.config.js
-          echo "  entry: './index.js'," >> webpack.config.js
+          echo "const path = require('path');" > webpack.config.cjs
+          echo "module.exports = {" >> webpack.config.cjs
+          echo "  mode: 'production'," >> webpack.config.cjs
+          echo "  entry: './index.js'," >> webpack.config.cjs
           echo "  output: {" >> webpack.config.js
-          echo "    path: path.resolve(__dirname, 'dist')," >> webpack.config.js
-          echo "    filename: 'index.bundle.js'," >> webpack.config.js
-          echo "    library: 'Russo'," >> webpack.config.js
-          echo "    libraryTarget: 'umd'," >> webpack.config.js
-          echo "  }," >> webpack.config.js
-          echo "  module: {" >> webpack.config.js
-          echo "    rules: [" >> webpack.config.js
-          echo "      {" >> webpack.config.js
-          echo "        test: /\.js$/," >> webpack.config.js
-          echo "        exclude: /node_modules/," >> webpack.config.js
+          echo "    path: path.resolve(__dirname, 'dist')," >> webpack.config.cjs
+          echo "    filename: 'index.bundle.js'," >> webpack.config.cjs
+          echo "    library: 'Russo'," >> webpack.config.cjs
+          echo "    libraryTarget: 'umd'," >> webpack.config.cjs
+          echo "  }," >> webpack.config.cjs
+          echo "  module: {" >> webpack.config.cjs
+          echo "    rules: [" >> webpack.config.cjs
+          echo "      {" >> webpack.config.cjs
+          echo "        test: /\.js$/," >> webpack.config.cjs
+          echo "        exclude: /node_modules/," >> webpack.config.cjs
           echo "        use: {" >> webpack.config.js
-          echo "          loader: 'babel-loader'," >> webpack.config.js
-          echo "          options: {" >> webpack.config.js
-          echo "            presets: ['@babel/preset-env']" >> webpack.config.js
-          echo "          }," >> webpack.config.js
-          echo "        }," >> webpack.config.js
-          echo "      }," >> webpack.config.js
-          echo "    ]," >> webpack.config.js
-          echo "  }," >> webpack.config.js
-          echo "  optimization: {" >> webpack.config.js
-          echo "    minimize: true," >> webpack.config.js
-          echo "  }," >> webpack.config.js
-          echo "};" >> webpack.config.js
+          echo "          loader: 'babel-loader'," >> webpack.config.cjs
+          echo "          options: {" >> webpack.config.cjs
+          echo "            presets: ['@babel/preset-env']" >> webpack.config.cjs
+          echo "          }," >> webpack.config.cjs
+          echo "        }," >> webpack.config.cjs
+          echo "      }," >> webpack.config.cjs
+          echo "    ]," >> webpack.config.cjs
+          echo "  }," >> webpack.config.cjs
+          echo "  optimization: {" >> webpack.config.cjs
+          echo "    minimize: true," >> webpack.config.cjs
+          echo "  }," >> webpack.config.cjs
+          echo "};" >> webpack.config.cjs
           
       - name: Build with Webpack
         run: npx webpack --config webpack.config.js # Use Webpack to bundle your files
