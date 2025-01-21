@@ -71,11 +71,11 @@ jobs:
           git config --global user.email "bundle.bot@lelbois.com"
           git config --global user.name "bundle bot"
 
-      - name: Create GitHub Tag
+      - name: Create GitHub Tag and Push
         run: |
           git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}" # Create a new tag
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/linuxfandudeguy/russo.js.git --tags # Push the tag to GitHub
-
+          git push https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/linuxfandudeguy/russo.js.git --tags # Push the tag to GitHub using the GitHub Actions token
+          
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
