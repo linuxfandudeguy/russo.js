@@ -3,10 +3,10 @@ name: Bundle and Release Russo.js
 on:
   push:
     branches:
-      - main # Trigger the action on pushes to the 'main' branch
+      - master  # Trigger the action on every push to the 'master' branch
   pull_request:
     branches:
-      - main # Trigger for PRs on the 'main' branch
+      - master  # Trigger for PRs targeting the 'master' branch
 
 jobs:
   build:
