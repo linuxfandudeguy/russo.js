@@ -3,10 +3,10 @@ name: Bundle and Release Russo.js
 on:
   push:
     branches:
-      - master  # Trigger the action on every push to the 'master' branch
+      - master
   pull_request:
     branches:
-      - master  # Trigger for PRs targeting the 'master' branch
+      - master
 
 jobs:
   build:
@@ -15,22 +15,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      
+        
       - name: Set up Node.js with PNPM
         uses: actions/setup-node@v2
         with:
-          node-version: '18' # Use the Node.js version you prefer
-          registry-url: 'https://registry.npmjs.org' # Use the default NPM registry
+          node-version: '18'
       
       - name: Install PNPM
         run: npm install -g pnpm
-      
+        
       - name: Install dependencies
-        run: pnpm install # Install dependencies using PNPM
-      
+        run: pnpm install
+        
       - name: Install Webpack and Bundling Tools
         run: |
-          pnpm add -D webpack webpack-cli babel-loader @babel/core @babel/preset-env terser-webpack-plugin # Install Webpack, Babel, and required plugins
+          pnpm add -D webpack webpack-cli babel-loader @babel/core @babel/preset-env terser-webpack-plugin
 
       - name: Create Webpack Configuration
         run: |
@@ -64,21 +63,22 @@ jobs:
           echo "};" >> webpack.config.cjs
           
       - name: Build with Webpack
-        run: npx webpack --config webpack.config.cjs # Use Webpack to bundle your files
-
-      - name: Configure Git for Release
+        run: npx webpack --config webpack.config.cjs
+        
+      - name: Configure Git authentication
         run: |
           git config --global user.email "bundle.bot@lelbois.com"
           git config --global user.name "bundle bot"
-
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/linuxfandudeguy/russo.js.git
+        
       - name: Create GitHub Tag and Push
         run: |
-          git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}" # Create a new tag
-          git push https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/linuxfandudeguy/russo.js.git --tags # Push the tag to GitHub using the GitHub Actions token
-          
+          git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}"
+          git push origin v${{ github.run_number }} # Push the tag to GitHub
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/index.bundle.js # Path to the bundled file created by Webpack
+          files: dist/index.bundle.js
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Automatically provided by GitHub Actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
