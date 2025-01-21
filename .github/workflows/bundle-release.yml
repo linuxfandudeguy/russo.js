@@ -64,7 +64,7 @@ jobs:
           echo "};" >> webpack.config.cjs
           
       - name: Build with Webpack
-        run: npx webpack --config webpack.config.js # Use Webpack to bundle your files
+        run: npx webpack --config webpack.config.cjs # Use Webpack to bundle your files
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
