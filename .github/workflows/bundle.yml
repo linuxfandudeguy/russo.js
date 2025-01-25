@@ -3,10 +3,10 @@ name: Webpack and GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger when pushing to the main branch
+      - master
   pull_request:
     branches:
-      - main  # Trigger on pull requests targeting the main branch
+      - master
 
 permissions:
   contents: write  # Grant write access to contents for committing changes
@@ -27,12 +27,12 @@ jobs:
     - name: Install dependencies and build
       run: |
         npm install webpack raw-loader webpack-cli
-        npx webpack-cli --mode production  # Run the Webpack build in production mode
+        npx webpack-cli --mode production  
 
     - name: Move build to docs/
       run: |
-        rm -rf docs  # Clean up the old docs folder
-        mv dist docs  # Move the build output to docs/
+        rm -rf docs  
+        mv dist docs  
 
     - name: Commit and push changes to the docs folder
       run: |
