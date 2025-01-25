@@ -3,13 +3,13 @@ name: Webpack and GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main  # Trigger when pushing to the main branch
   pull_request:
     branches:
-      - main  # Trigger on pull request targeting the main branch
+      - main  # Trigger on pull requests targeting the main branch
 
 permissions:
-  contents: write  # Ensure write access to the repository content
+  contents: write  # Grant write access to contents for committing changes
 
 jobs:
   build:
@@ -22,25 +22,24 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: 18.x  # Specify Node.js version
+        node-version: 18.x  # Use a specific Node.js version
 
     - name: Install dependencies and build
       run: |
-        npm install webpack webpack-cli --save-dev
-        npm install raw-loader --save-dev
-        npx webpack-cli  # Run webpack build
+        npm install webpack raw-loader webpack-cli
+        npx webpack-cli --mode production  # Run the Webpack build in production mode
 
     - name: Move build to docs/
       run: |
-        rm -rf docs  # Clear existing docs folder
-        mv dist docs  # Move the build to docs folder
+        rm -rf docs  # Clean up the old docs folder
+        mv dist docs  # Move the build output to docs/
 
     - name: Commit and push changes to the docs folder
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
         git add docs/
-        git commit -m "Update GitHub Pages build"
+        git commit -m "Update Webpack build"
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use GitHub token for authentication
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
