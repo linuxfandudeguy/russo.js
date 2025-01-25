@@ -27,5 +27,5 @@ jobs:
 
     - name: Install dependencies and build with Webpack
       run: |
-        npm install webpack webpack-cli
+        npm install webpack webpack-cli raw-loader        
         npx webpack-cli
