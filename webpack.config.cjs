@@ -10,6 +10,7 @@ module.exports = {
     umdNamedDefine: true, 
     globalObject: 'this', 
   },
+  mode: 'production', // Use production mode
   module: {
     rules: [
       {
@@ -23,6 +24,6 @@ module.exports = {
     extensions: ['.js'], 
   },
   externals: {
-   // Nothing should go here
+    // Nothing should go here
   },
 };
