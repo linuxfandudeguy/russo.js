@@ -29,10 +29,10 @@ jobs:
         npm install webpack webpack-cli babel-loader @babel/core @babel/preset-env        
         npx webpack-cli --mode production  
 
-    - name: Move build to docs/
+    - name: Move build to prod/
       run: |
-        rm -rf docs  
-        mv dist docs  
+        rm -rf prod  
+        mv dist prod  
 
     - name: Commit and push changes to the docs folder
       run: |
