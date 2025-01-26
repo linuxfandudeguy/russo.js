@@ -26,7 +26,8 @@ jobs:
 
     - name: Install dependencies and build
       run: |
-        npm install webpack webpack-cli babel-loader @babel/core @babel/preset-env        
+        npm install webpack webpack-cli babel-loader @babel/core @babel/preset-env @babel/plugin-transform-runtime
+        npm install terser-webpack-plugin        
         npx webpack-cli --mode production
         rm -rf node_modules 
 
