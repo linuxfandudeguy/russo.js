@@ -1,5 +1,5 @@
 export function toRussian(text) {
-  // Full transliteration mapping, including single letters and digraphs
+  // full transliteration mapping, including single letters and digraphs
   const transliterationMap = {
     'a': 'а', 'b': 'б', 'v': 'в', 'g': 'г', 'd': 'д',
     'e': 'е', 'yo': 'ё', 'zh': 'ж', 'z': 'з', 'i': 'и',
@@ -10,7 +10,7 @@ export function toRussian(text) {
     ' ': ' ', // Preserve spaces
   };
 
-  // Create a regular expression to match digraphs first (e.g., "sh", "zh") and single letters
+  // create a regular expression to match digraphs first (e.g., "sh", "zh") and single letters
   const regex = new RegExp(
     Object.keys(transliterationMap).sort((a, b) => b.length - a.length).join('|'),
     'gi'
