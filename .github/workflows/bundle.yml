@@ -38,6 +38,7 @@ jobs:
     - name: Commit and push changes to the prod folder
       run: |
         rm -rf package.json
+        rm -rf package-lock.json
         git add prod/ 
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
