@@ -1,4 +1,4 @@
-name: Webpack and GitHub Pages
+name: webpack ci
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
 
     - name: Install dependencies and build
       run: |
-        npm install webpack raw-loader webpack-cli babel-loader @babel/core @babel/preset-env        
+        npm install webpack webpack-cli babel-loader @babel/core @babel/preset-env        
         npx webpack-cli --mode production  
 
     - name: Move build to docs/
