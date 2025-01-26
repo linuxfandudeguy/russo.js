@@ -26,9 +26,10 @@ jobs:
 
     - name: Install dependencies and build
       run: |
-        npm install webpack webpack-cli babel-loader @babel/core @babel/preset-env @babel/plugin-transform-runtime
-        npm install terser-webpack-plugin webpack-banner-plugin --save-dev
-        npx webpack-cli --mode production
+        npm i -g pnpm
+        pnpm install webpack webpack-cli babel-loader @babel/core @babel/preset-env @babel/plugin-transform-runtime
+        pnpm install terser-webpack-plugin -D
+        pnpx webpack-cli --mode production
         rm -rf node_modules 
 
     - name: Move build to prod/
@@ -40,7 +41,7 @@ jobs:
       run: |
 
         # Stage the build output for commit
-        git add prod/ package.json package-lock.json --force
+        git add prod/ package.json pnpm-lock.yaml --force
 
         # Commit the changes
         git config --global user.name "GitHub Actions"
