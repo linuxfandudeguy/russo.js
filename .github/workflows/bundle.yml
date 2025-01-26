@@ -28,7 +28,7 @@ jobs:
       run: |
         npm install webpack webpack-cli babel-loader @babel/core @babel/preset-env        
         npx webpack-cli --mode production
-        rm -rf node_modules  # Remove node_modules after build
+        rm -rf node_modules 
 
     - name: Move build to prod/
       run: |
@@ -39,7 +39,7 @@ jobs:
       run: |
 
         # Stage the build output for commit
-        git add prod/
+        git add prod/ package.json package-lock.json
 
         # Commit the changes
         git config --global user.name "GitHub Actions"
