@@ -9,47 +9,65 @@ on:
       - master
 
 permissions:
-  contents: write  
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18.x  
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x  
 
-    - name: Install dependencies and build
-      run: |
-        npm i -g pnpm@9.15.4        
-        pnpm config set registry https://registry.npmjs.org/
-        pnpm install webpack@5.97.1 webpack-cli@6.0.1 babel-loader@9.2.1 --save-dev
-        pnpm install @babel/core@7.26.7 @babel/preset-env@7.26.7 --save-dev
-        pnpm install @babel/plugin-transform-runtime@7.25.9 --save-dev        
-        pnpm install terser-webpack-plugin@5.3.11 @babel/runtime@7.26.7 --save-dev
-        pnpx webpack-cli@6.0.1 --mode production
-        rm -rf node_modules 
+      - name: Echo package.json
+        run: |
+          echo '{
+            "name": "russo",
+            "version": "1.0.0",
+            "description": "A library for romanizing Russian to English with custom mappings and ISO 9 standards.",
+            "main": "prod/bundle.js",
+            "scripts": {
+              "build": "webpack --mode production",
+              "test": "echo \\"No test specified\\""
+            },
+            "keywords": [
+              "romanization",
+              "transliteration",
+              "russian",
+              "cyrillic",
+              "ISO9"
+            ],
+            "author": "linuxfandudeguy",
+            "license": "MIT"
+          }' > package.json
 
-    - name: Move build to prod/
-      run: |
-        rm -rf prod  
-        mv dist prod  
+      - name: Install dependencies and build
+        run: |
+          npm i -g pnpm@9.15.4        
+          pnpm config set registry https://registry.npmjs.org/
+          pnpm install webpack@5.97.1 webpack-cli@6.0.1 babel-loader@9.2.1 --save-dev
+          pnpm install @babel/core@7.26.7 @babel/preset-env@7.26.7 --save-dev
+          pnpm install @babel/plugin-transform-runtime@7.25.9 --save-dev        
+          pnpm install terser-webpack-plugin@5.3.11 @babel/runtime@7.26.7 --save-dev
+          pnpm run build
+          rm -rf node_modules 
 
-    - name: Commit and push changes to the prod folder
-      run: |
+      - name: Move build to prod/
+        run: |
+          rm -rf prod  
+          mv dist prod  
 
-        # Stage the build output for commit
-        git add prod/ package.json pnpm-lock.yaml --force
-
-        # Commit the changes
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git commit -m "Bundle via Webpack"
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      - name: Commit and push changes to the prod folder
+        run: |
+          git add prod/ package.json pnpm-lock.yaml --force
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git commit -m "Bundle via Webpack"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
