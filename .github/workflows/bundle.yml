@@ -41,7 +41,7 @@ jobs:
               "cyrillic",
               "ISO9"
             ],
-            "author": "Your Name",
+            "author": "linuxfandudeguy",
             "license": "MIT"
           }' > package.json
 
