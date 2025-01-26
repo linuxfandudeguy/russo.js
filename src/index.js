@@ -1,3 +1,9 @@
+/*
+ * Russo.js - ISO 9-based Cyrillic to Latin transliteration
+ * Created in 2025
+ * Licensed under the MIT License
+ * GitHub: https://github.com/linuxfandudeguy/russo.js
+ */
 import { transliterate } from './mappings/transliterate.js';
 import { toRussian } from './mappings/toRussian.js';
 
