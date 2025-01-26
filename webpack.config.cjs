@@ -42,7 +42,7 @@ module.exports = {
             ascii_only: true, 
           },
         },
-        extractComments: true, 
+        extractComments: false, 
       }),
     ],
   },
