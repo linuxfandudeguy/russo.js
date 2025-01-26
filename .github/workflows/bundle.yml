@@ -28,7 +28,7 @@ jobs:
       run: |
         npm i -g pnpm
         pnpm install webpack webpack-cli babel-loader @babel/core @babel/preset-env @babel/plugin-transform-runtime
-        pnpm install terser-webpack-plugin -D
+        pnpm install terser-webpack-plugin @babel/runtime-D
         pnpx webpack-cli --mode production
         rm -rf node_modules 
 
