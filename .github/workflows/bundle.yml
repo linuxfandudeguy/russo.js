@@ -9,7 +9,7 @@ on:
       - master
 
 permissions:
-  contents: write  # Grant write access to contents for committing changes
+  contents: write  
 
 jobs:
   build:
@@ -22,13 +22,13 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: 18.x  # Use a specific Node.js version
+        node-version: 18.x  
 
     - name: Install dependencies and build
       run: |
         npm install webpack webpack-cli babel-loader @babel/core @babel/preset-env        
         npx webpack-cli --mode production
-        rm -rf node_modules
+        rm -rf node_modules  # Remove node_modules after build
 
     - name: Move build to prod/
       run: |
@@ -37,12 +37,16 @@ jobs:
 
     - name: Commit and push changes to the prod folder
       run: |
-        rm -rf package.json
-        rm -rf package-lock.json
-        git add prod/ 
+        git rm --cached package.json
+        git rm --cached package-lock.json
+
+        # Stage the build output for commit
+        git add prod/
+
+        # Commit the changes
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
-        git commit -m "Bundle via Webpack"
+        git commit -m "Bundle via Webpack and untrack package files"
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
