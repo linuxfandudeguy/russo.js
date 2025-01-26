@@ -32,8 +32,7 @@ jobs:
             "description": "A library for romanizing Russian to English with custom mappings and ISO 9 standards.",
             "main": "prod/bundle.js",
             "scripts": {
-              "build": "webpack --mode production",
-              "test": "echo \\"No test specified\\""
+              "build": "webpack --mode production"
             },
             "keywords": [
               "romanization",
@@ -42,7 +41,7 @@ jobs:
               "cyrillic",
               "ISO9"
             ],
-            "author": "linuxfandudeguy",
+            "author": "Your Name",
             "license": "MIT"
           }' > package.json
 
@@ -54,7 +53,7 @@ jobs:
           pnpm install @babel/core@7.26.7 @babel/preset-env@7.26.7 --save-dev
           pnpm install @babel/plugin-transform-runtime@7.25.9 --save-dev        
           pnpm install terser-webpack-plugin@5.3.11 @babel/runtime@7.26.7 --save-dev
-          pnpm run build
+          pnpm build
           rm -rf node_modules 
 
       - name: Move build to prod/
