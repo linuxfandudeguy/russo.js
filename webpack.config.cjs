@@ -1,29 +1,29 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js', 
+  entry: './src/index.js',  
   output: {
-    filename: 'bundle.js', 
-    path: path.resolve(__dirname, 'dist'), 
-    library: 'russo', 
-    libraryTarget: 'umd', 
+    filename: 'bundle.js',  // the output file name
+    path: path.resolve(__dirname, 'dist'),  // the output directory
+    library: 'russo',  
+    libraryTarget: 'umd',  
     umdNamedDefine: true, 
-    globalObject: 'this', 
+    globalObject: 'this',  
   },
-  mode: 'production', // Use production mode
+  mode: 'production',  
   module: {
     rules: [
       {
         test: /\.js$/, 
-        exclude: /node_modules/,
-        use: 'raw-loader', 
+        exclude: /node_modules/,  
+        use: 'babel-loader', 
       },
     ],
   },
   resolve: {
-    extensions: ['.js'], 
+    extensions: ['.js'],  
   },
   externals: {
-    // Nothing should go here
+    // no external dependencies
   },
 };
