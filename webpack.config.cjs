@@ -4,21 +4,21 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'bundle.js', // the output file name
-    path: path.resolve(__dirname, 'dist'), // the output directory
+    filename: 'bundle.js', 
+    path: path.resolve(__dirname, 'dist'), 
     library: 'russo',
     libraryTarget: 'umd',
     umdNamedDefine: true,
     globalObject: 'this',
   },
   mode: 'production',
-  devtool: 'source-map', // Enable source maps for easier debugging
+  devtool: 'source-map',
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: 'babel-loader', // No additional Babel options needed
+        use: 'babel-loader',
       },
     ],
   },
@@ -29,13 +29,16 @@ module.exports = {
     // no external dependencies
   },
   optimization: {
-    minimize: true, 
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         terserOptions: {
-          ecma: 5, 
+          ecma: 5,
           compress: {
             drop_console: true, 
+          },
+          output: {
+            ascii_only: true, 
           },
         },
         extractComments: true, 
