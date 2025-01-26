@@ -40,7 +40,7 @@ jobs:
       run: |
 
         # Stage the build output for commit
-        git add prod/ package.json package-lock.json
+        git add prod/ package.json package-lock.json --force
 
         # Commit the changes
         git config --global user.name "GitHub Actions"
