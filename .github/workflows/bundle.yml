@@ -38,7 +38,6 @@ jobs:
     - name: Commit and push changes to the prod folder
       run: |
         git rm --cached package.json
-        git rm --cached package-lock.json
 
         # Stage the build output for commit
         git add prod/
