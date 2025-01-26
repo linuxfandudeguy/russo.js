@@ -1,5 +1,6 @@
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack'); 
 
 module.exports = {
   entry: './src/index.js',
@@ -45,4 +46,17 @@ module.exports = {
       }),
     ],
   },
+  plugins: [
+    new webpack.BannerPlugin({
+      banner: `
+/*
+ * Russo.js - ISO 9-based Cyrillic to Latin transliteration
+ * Created in 2025
+ * Licensed under the MIT License
+ * GitHub: https://github.com/linuxfandudeguy/russo.js
+ */
+      `,
+      raw: true, // Ensures the banner is added as a raw comment block
+    }),
+  ],
 };
