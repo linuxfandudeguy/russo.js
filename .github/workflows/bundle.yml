@@ -34,7 +34,7 @@ jobs:
         rm -rf prod  
         mv dist prod  
 
-    - name: Commit and push changes to the docs folder
+    - name: Commit and push changes to the prod folder
       run: |
         git add prod/
         git config --global user.name "GitHub Actions"
