@@ -22,5 +22,6 @@ if (typeof window !== 'undefined') {
   window.Russo = Russo;
 }
 
+// export
 export { Russo, transliterate, toRussian };
 export default Russo; 
